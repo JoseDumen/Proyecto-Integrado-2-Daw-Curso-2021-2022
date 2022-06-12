@@ -1,0 +1,13 @@
+#titulo{
+    margin-top: 2%;
+    width: fit-content;
+}
+#formularioAlta{
+    padding-top: 2%;
+    width: 20%;
+}
+@media only screen and (max-width: 600px) {
+    #footer {
+        position: relative;
+    }
+}

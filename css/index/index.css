@@ -1,0 +1,12 @@
+#rowContenido {
+    width: 100%;
+    height: 100%;
+    background-color: gray;
+}
+#divFormulario {
+    padding: 10%;
+    background-color: white;
+}
+label{
+    font-weight: bolder;
+}
