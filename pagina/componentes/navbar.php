@@ -26,6 +26,13 @@
               <li><a class="dropdown-item" href="#">Listado proyectos</a></li>
           </ul>
       </li>
-  </div>
+    </div>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="cerrarSesion.php">Cerrar sesión</a>
+            </li>
+        </ul>
+    </div>
 </div>
 </nav>

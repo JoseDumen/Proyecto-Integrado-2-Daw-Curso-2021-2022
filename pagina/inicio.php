@@ -5,7 +5,7 @@ if(isset($_SESSION["logeado"]) && $_SESSION["logeado"] == true){
     //echo "Conectado";
 
 } else {
-    echo "NO";
+    header('Location: ../index.php');
     
 }
 

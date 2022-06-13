@@ -1,20 +1,47 @@
 "use strict";
 
-document.querySelector("#botonAlta").addEventListener("click", alta);
 document.querySelector("#botonContraseña").addEventListener("click",mostrarContraseña);
+document.querySelector("#botonEditar").addEventListener("click",permitirEdicion);
+document.querySelector("#botonActualizar").addEventListener("click",actualizar);
+document.querySelector("#botonModalCerrar").addEventListener("click",cerrar);
 
-function alta(){
-    let nombreEmpleado = document.querySelector("#inputNombre").value.trim();
-    let telefonoEmpleado = document.querySelector("#inputTelefono").value.trim();
-    let correoEmpleado = document.querySelector("#inputCorreo").value.trim();
-    let passwordEmpleado = document.querySelector("#inputPassword").value.trim();
-    let categoriaEmpleado = document.querySelector("#selectCategoria").value;
+
+function mostrarContraseña(){
+    let inputContra = document.querySelector("#inputPassword");
+    let ojo = document.querySelector("#ojoContraseña");
+
+    if(inputContra.type=="password"){
+        inputContra.type = "text";
+        ojo.classList.remove("fa-eye");
+        ojo.classList.add("fa-eye-slash");
+    } else {
+        inputContra.type = "password";
+        ojo.classList.remove("fa-eye-slash");
+        ojo.classList.add("fa-eye");
+    }
+} 
+
+function permitirEdicion(){
+    document.querySelector("#inputNombre").disabled = false;
+    document.querySelector("#inputTelefono").disabled = false;
+    document.querySelector("#inputCorreo").disabled = false;
+    document.querySelector("#inputPassword").disabled = false;
+    document.querySelector("#botonActualizar").disabled = false;
+}
+
+function actualizar(){
+    let nombreNuevo = document.querySelector("#inputNombre").value.trim();
+    let telefonoNuevo = document.querySelector("#inputTelefono").value.trim();
+    let correoNuevo = document.querySelector("#inputCorreo").value.trim();
+    let passNuevo = document.querySelector("#inputPassword").value.trim();
+
+
 
 
     let oRegExp = /^[^0-9\.\,\"\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]{4,30}$/;
     let correcto = true;
 
-    if(oRegExp.test(nombreEmpleado)){
+    if(oRegExp.test(nombreNuevo)){
         document.querySelector("#inputNombre").classList.remove("is-invalid");
         document.querySelector("#inputNombre").classList.add("is-valid");
         if(document.querySelector("#liNombre") != undefined){
@@ -33,7 +60,7 @@ function alta(){
 
     oRegExp = /^\d{9}$/;
 
-    if(oRegExp.test(telefonoEmpleado)){
+    if(oRegExp.test(telefonoNuevo)){
         document.querySelector("#inputTelefono").classList.remove("is-invalid");
         document.querySelector("#inputTelefono").classList.add("is-valid");
         if(document.querySelector("#liTelefono") != undefined){
@@ -52,7 +79,7 @@ function alta(){
 
     oRegExp = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
 
-    if(oRegExp.test(correoEmpleado)){
+    if(oRegExp.test(correoNuevo)){
         document.querySelector("#inputCorreo").classList.remove("is-invalid");
         document.querySelector("#inputCorreo").classList.add("is-valid");
         if(document.querySelector("#liCorreo") != undefined){
@@ -71,7 +98,7 @@ function alta(){
 
     oRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
-    if(oRegExp.test(passwordEmpleado)){
+    if(oRegExp.test(passNuevo)){
         document.querySelector("#inputPassword").classList.remove("is-invalid");
         document.querySelector("#inputPassword").classList.add("is-valid");
         if(document.querySelector("#liPassword") != undefined){
@@ -89,75 +116,45 @@ function alta(){
     }
 
 
-    if(categoriaEmpleado != "sin"){
-        document.querySelector("#selectCategoria").classList.remove("is-invalid");
-        document.querySelector("#selectCategoria").classList.add("is-valid");
-        if(document.querySelector("#liCategoria") != undefined){
-            document.querySelector("#liCategoria").remove();
-        }
-    } else {
-        document.querySelector("#selectCategoria").classList.remove("is-valid");
-        document.querySelector("#selectCategoria").classList.add("is-invalid");
-        if(document.querySelector("#liCategoria") == undefined){
-            document.querySelector("#listaValidacion").innerHTML += "<h5 id='liCategoria'><strong>- Debe seleccionar una categoría.</strong></h5>";
-        }
-       
-        correcto = false;  
-    }
 
-    
     if(!correcto){
         modalValidacion.toggle();
     } else {
         let options = {
-            method: "POST",
-            body: JSON.stringify({ nombre: nombreEmpleado, telefono: telefonoEmpleado, correo: correoEmpleado, pass: passwordEmpleado, categoria: categoriaEmpleado }),
-            headers: {
-                'Content-Type': 'application/json'// AQUI indicamos el formato
-            }
-        };
-    
-        fetch("../php/darAltaEmpleado.php", options)
-            .then(respuesta => respuesta.text())
-            .then(texto => responder(texto));
+        method: "POST",
+        body: JSON.stringify({ nombre: nombreNuevo, telefono: telefonoNuevo, correo: correoNuevo, pass: passNuevo}),
+        headers: {
+            'Content-Type': 'application/json'// AQUI indicamos el formato
+        }
+    };
 
+    fetch("../php/actualizarEmpleado.php", options)
+        .then(respuesta => respuesta.text())
+        .then(texto => responder(texto));
     }
+
     
+
 }
 
 function responder(texto){
     switch (texto) {
-        case "existe":
-            modalExiste.toggle();
-            break;
-
         case "ok":
-            modalAlta.toggle();
-
+            modalActualizacion.toggle();
             break;
 
         case "ko":
-            modalAltaErronea.toggle();
+            modalError.toggle();
+            break;
+    
 
-            break;    
     }
 }
 
-
-
-
-
-function mostrarContraseña(){
-    let inputContra = document.querySelector("#inputPassword");
-    let ojo = document.querySelector("#ojoContraseña");
-
-    if(inputContra.type=="password"){
-        inputContra.type = "text";
-        ojo.classList.remove("fa-eye");
-        ojo.classList.add("fa-eye-slash");
-    } else {
-        inputContra.type = "password";
-        ojo.classList.remove("fa-eye-slash");
-        ojo.classList.add("fa-eye");
-    }
-} 
+function cerrar(){
+    document.querySelector("#inputNombre").disabled = true;
+    document.querySelector("#inputTelefono").disabled = true;
+    document.querySelector("#inputCorreo").disabled = true;
+    document.querySelector("#inputPassword").disabled = true;
+    document.querySelector("#botonActualizar").disabled = true;
+}

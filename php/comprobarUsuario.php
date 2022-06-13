@@ -19,6 +19,7 @@
     */
 
     if($registro){
+        $_SESSION["id"] = $registro["id"];
         $_SESSION["nombre"] = $registro["nombre"];
         $_SESSION["telefono"] = $registro["telefono"];
         $_SESSION["correo"] = $registro["correo"];
