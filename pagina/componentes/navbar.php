@@ -1,3 +1,7 @@
+<?php 
+    $nombre = $_SESSION["nombre"];
+?>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 <div class="container-fluid">
   <a class="navbar-brand" href="inicio.php">Inicio</a>
@@ -22,15 +26,16 @@
           Sección proyectos
       </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Alta proyecto</a></li>
-              <li><a class="dropdown-item" href="#">Listado proyectos</a></li>
+              <li><a class="dropdown-item" href="altaProyecto.php">Alta proyecto</a></li>
+              <li><a class="dropdown-item" href="historialProyectos.php">Historial proyectos</a></li>
           </ul>
       </li>
     </div>
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
         <ul class="navbar-nav">
+                
             <li class="nav-item">
-                <a class="nav-link" href="cerrarSesion.php">Cerrar sesión</a>
+                <a class="nav-link" href="cerrarSesion.php">Cerrar sesión de <?php echo $nombre; ?></a>
             </li>
         </ul>
     </div>

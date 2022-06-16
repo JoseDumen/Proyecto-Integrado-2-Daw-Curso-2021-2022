@@ -121,7 +121,7 @@ if(isset($_SESSION["logeado"]) && $_SESSION["logeado"] == true){
 <!-- Modal con actualizacion -->
 <div class="modal fade" data-bs-backdrop="static" id="modalActualizacion" tabindex="-1" aria-labelledby="modalActualizacionLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content"style="background-color: #87D37C;">
       <div class="modal-header">
         <h5 class="modal-title" id="modalActualizacionLabel">Actualización</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -181,6 +181,7 @@ if(isset($_SESSION["logeado"]) && $_SESSION["logeado"] == true){
     <?php
         include "componentes/footer.php";
     ?>
+
 
 
 <script type="text/javascript" src="../javascript/informacionEmpleado.js"></script>

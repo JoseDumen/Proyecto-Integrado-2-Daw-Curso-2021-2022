@@ -25,7 +25,7 @@ function alta(){
         document.querySelector("#inputNombre").classList.remove("is-valid");
         document.querySelector("#inputNombre").classList.add("is-invalid");
         if(document.querySelector("#liNombre") == undefined){
-            document.querySelector("#listaValidacion").innerHTML = "<h5 id='liNombre'><strong>- El nombre no es correcto o está vacio.</strong></h5>";
+            document.querySelector("#listaValidacion").innerHTML = "<h5 id='liNombre'><strong>- El nombre no es correcto o está vacío.</strong></h5>";
         }
         
         correcto = false;        
@@ -44,7 +44,7 @@ function alta(){
         document.querySelector("#inputTelefono").classList.remove("is-valid");
         document.querySelector("#inputTelefono").classList.add("is-invalid");
         if(document.querySelector("#liTelefono") == undefined){
-            document.querySelector("#listaValidacion").innerHTML += "<h5 id='liTelefono'><strong>- El teléfono no es correcto o está vacio.</strong></h5>";
+            document.querySelector("#listaValidacion").innerHTML += "<h5 id='liTelefono'><strong>- El teléfono no es correcto o está vacío.</strong></h5>";
         }
         correcto = false;        
     }
@@ -63,7 +63,7 @@ function alta(){
         document.querySelector("#inputCorreo").classList.remove("is-valid");
         document.querySelector("#inputCorreo").classList.add("is-invalid");
         if(document.querySelector("#liCorreo") == undefined){
-            document.querySelector("#listaValidacion").innerHTML += "<h5 id='liCorreo'><strong>- El correo no es correcto o está vacio.</strong></h5>";
+            document.querySelector("#listaValidacion").innerHTML += "<h5 id='liCorreo'><strong>- El correo no es correcto o está vacío.</strong></h5>";
         }
         
         correcto = false;        
@@ -82,7 +82,7 @@ function alta(){
         document.querySelector("#inputPassword").classList.remove("is-valid");
         document.querySelector("#inputPassword").classList.add("is-invalid");
         if(document.querySelector("#liPassword") == undefined){
-            document.querySelector("#listaValidacion").innerHTML += "<h5 id='liPassword'><strong>- La contraseña no es correcta o está vacia.</strong></h5>";
+            document.querySelector("#listaValidacion").innerHTML += "<h5 id='liPassword'><strong>- La contraseña no es correcta o está vacía.</strong></h5>";
 
         }
         correcto = false;        

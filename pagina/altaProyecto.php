@@ -12,11 +12,12 @@ if(isset($_SESSION["logeado"]) && $_SESSION["logeado"] == true){
 ?>
 <html lang="es">
     <head>
-        <title>Alta empleado</title>
+        <title>Alta proyecto</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="../css/pagina/altaEmpleado.css" />
+        <link rel="stylesheet" type="text/css" href="../css/pagina/altaProyecto.css" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <style>
         @media only screen and (max-width: 600px) {
@@ -37,54 +38,55 @@ if(isset($_SESSION["logeado"]) && $_SESSION["logeado"] == true){
 <div class="container-fluid">
 <div class="row">
 
-<div class="col-md-5 mx-auto">
-        <h1 id="titulo" ><strong>Alta empleado</strong></h1>
+<div class="col-md-6 mx-auto">
+        <h1 id="titulo" ><strong>Alta proyecto</strong></h1>
         <div class="card shadow-lg p-3 mb-5 bg-body rounded">
             <div class="card-body">
                 <form>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="inputNombre" class="form-label">Nombre empleado:</label>
+                                <label for="inputNombre" class="form-label">Nombre proyecto:</label>
                                 <input type="text" class="form-control" id="inputNombre">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="inputTelefono" class="form-label">Teléfono:</label>
-                                <input type="text" class="form-control" id="inputTelefono">
+                                <label for="inputImporte" class="form-label">Importe:</label>
+                                <input type="text" class="form-control" id="inputImporte">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="inputCorreo" class="form-label">Correo:</label>
-                                <input type="text" class="form-control" id="inputCorreo">
+                                <label for="inputDescripcion" class="form-label">Descripción:</label>
+                                <textarea class="form-control" id="inputDescripcion" cols="50" maxlength="400" style="height: 160px;"></textarea>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                            <label for="inputPassword" class="form-label">Contraseña</label>
-                        <div class="input-group mb-3">
-                            <input type="password" id="inputPassword" name="inputPassword" class="form-control">
-                            <button id="botonContraseña" name="botonContraseña" class="btn btn-secondary" type="button"><i id="ojoContraseña" class="fa-solid fa-eye"></i></button>
-                        </div>
+                                <label for="inputCliente" class="form-label">Información cliente:</label>
+                                <textarea class="form-control" id="inputCliente" cols="50" maxlength="400" style="height: 160px;"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <label for="selectCategoria" class="form-label">Categoría:</label>
-                            <select class="form-select" id="selectCategoria">
-                                <option value="sin">Seleccione la categoría</option>
-                                <option value="jefe">Jefe de proyecto</option>
-                                <option value="analista">Analista</option>
-                                <option value="programador">Programador</option>
-                            </select>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="inputFechaInicio" class="form-label">Fecha inicio:</label>
+                                <input type="text" class="form-control" id="inputFechaInicio" name="inputFechaInicio"style="background-color: white;">
+                                
+                            </div>
                         </div>
-                        <div class="col-md-5 mx-auto">
-                            <button type="button" id="botonAlta" name="botonAlta" class="btn btn-success" style="margin-top: 11%;">Dar de alta</button>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="inputFechaFin" class="form-label">Fecha fin:</label>
+                                <input type="text" class="form-control" id="inputFechaFin" name="inputFechaFin"style="background-color: white;">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mx-auto">
+                            <button type="button" id="botonCrear" name="botonCrear" class="btn btn-success" style="margin-top: 11%;">Crear proyecto</button>
                         </div>
                     </div>
                 </form>
@@ -96,8 +98,6 @@ if(isset($_SESSION["logeado"]) && $_SESSION["logeado"] == true){
 </div>
 </div>
 </div>
-
-
 
 <!-- Modal con información de la validación -->
 <div class="modal fade" data-bs-backdrop="static" id="modalValidacion" tabindex="-1" aria-labelledby="modalValidacionLabel" aria-hidden="true">
@@ -119,39 +119,16 @@ if(isset($_SESSION["logeado"]) && $_SESSION["logeado"] == true){
 </div>
 <!-- Modal con información de la validación -->
 
-
-<!-- Modal existe usuario -->
-<div class="modal fade" data-bs-backdrop="static" id="modalExiste" tabindex="-1" aria-labelledby="modalExisteLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalExisteLabel">Validación</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <h5><strong>Ya existe un usuario con ese correo.</strong></h5>
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Modal existe usuario -->
-
 <!-- Modal alta correcta -->
 <div class="modal fade" data-bs-backdrop="static" id="modalAlta" tabindex="-1" aria-labelledby="modalAltaLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content"style="background-color: #87D37C;">
+    <div class="modal-content" style="background-color: #87D37C;">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalAltaLabel">Validación</h5>
+        <h5 class="modal-title" id="modalAltaLabel">Correcto</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <h5><strong>Alta realizada correctamente.</strong></h5>
-        <h5><strong>Recuerdele al nuevo empleado que cambie la contraseña.</strong></h5>
-        
+        <h5><strong>Proyecto dado de alta correctamente.</strong></h5>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -170,7 +147,7 @@ if(isset($_SESSION["logeado"]) && $_SESSION["logeado"] == true){
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <h5><strong>Ha fallado el alta de empleado.</strong></h5>
+        <h5><strong>Ha fallado el alta de proyecto.</strong></h5>
         
       </div>
       <div class="modal-footer">
@@ -182,21 +159,61 @@ if(isset($_SESSION["logeado"]) && $_SESSION["logeado"] == true){
 <!-- Modal alta erronea -->
 
 
+
+
+
+
     <?php
         include "componentes/footer.php";
     ?>
 
 
-<script type="text/javascript" src="../javascript/altaEmpleado.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script type="text/javascript" src="../javascript/altaProyecto.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript">
     var modalValidacion = new bootstrap.Modal(document.getElementById('modalValidacion'));
-    var modalExiste = new bootstrap.Modal(document.getElementById('modalExiste'));
     var modalAlta = new bootstrap.Modal(document.getElementById('modalAlta'));
-    var modalAltaErronea = new bootstrap.Modal(document.getElementById('modalAltaErronea'));
+    var modalError = new bootstrap.Modal(document.getElementById('modalAltaErronea'));
 
 </script>
-
+<script type="text/javascript">
+flatpickr('#inputFechaInicio', {
+    minDate: "today",
+    weekNumbers: true,
+    dateFormat: "d-m-Y",
+    locale: {
+        firstDayOfWeek: 1,
+        weekdays: {
+          shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+          longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],         
+        }, 
+        months: {
+          shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
+          longhand: ['Enero', 'Febreo', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        },
+      }
+});
+flatpickr('#inputFechaFin', {
+  "minDate": new Date().fp_incr(1),
+    weekNumbers: true,
+    dateFormat: "d-m-Y",
+    locale: {
+        firstDayOfWeek: 1,
+        weekdays: {
+          shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+          longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],         
+        }, 
+        months: {
+          shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
+          longhand: ['Enero', 'Febreo', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        },
+      }
+});
+</script>
 
 </body>
 </html>
