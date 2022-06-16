@@ -39,6 +39,6 @@ function responder(texto){
     if(texto == "ok"){
         window.location = "pagina/inicio.php";
     } else {
-        alert("Fallo en el inicio de sesión");
+        document.querySelector("#fallo").style.display="block";
     }
 }

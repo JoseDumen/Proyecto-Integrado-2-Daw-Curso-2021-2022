@@ -1,0 +1,17 @@
+.botonPDF {
+    color: red !important;
+    background-color: white !important;
+    border: none !important;
+}
+
+.botonExcel {
+    color: green !important;
+    background-color: white !important;
+    border: none !important;
+}
+
+.botonImpr{
+    color: darkblue !important;
+    background-color: white !important;
+    border: none !important;
+}

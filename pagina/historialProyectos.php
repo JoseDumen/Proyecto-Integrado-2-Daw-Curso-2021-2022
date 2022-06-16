@@ -124,10 +124,7 @@ if(isset($_SESSION["logeado"]) && $_SESSION["logeado"] == true){
 });
     
 </script>
-<script type="text/javascript">
-    var modalActualizacion = new bootstrap.Modal(document.getElementById('modalActualizacion'));
 
-</script>
 
 
 </body>

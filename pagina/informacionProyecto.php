@@ -19,13 +19,24 @@ if(isset($_SESSION["logeado"]) && $_SESSION["logeado"] == true){
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <style>
+        @media only screen and (max-width: 600px) {
+            #footer {
+                position: relative;
+            }
+        }
+        @media only screen and (min-width: 600px) {
+            #footer {
+                position: relative;
+            }
+        }
+
+    </style>
     </head>
     <body>
         <?php
             include "componentes/navbar.php";
         ?>
-
-
 
 <div>
     <?php
@@ -117,7 +128,6 @@ $proyecto .= <<<EOT
         </div>
 EOT;
 
-
 $proyecto .= <<<EOT
 </div>
 <div class="row">
@@ -130,9 +140,11 @@ $proyecto .= <<<EOT
                 <th>Fecha inicio</th>
                 <th>Fecha fin</th>
                 <th>Añadir tarea</th>
+                <th>Modificar</th>
+                <th>Eliminar</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="cuerpoActividades">
         <tbody>
     </table>
 </div>
@@ -258,11 +270,9 @@ echo $proyecto;
                 </div>
             </div>
           </form>
-          
-        
       </div>
       <div class="modal-footer">
-        <button type="button" id="altaActividad" class="btn btn-success">Alta</button>
+        <button type="button" id="altaActividad" class="btn btn-success"data-bs-dismiss="modal">Alta</button>
         <button type="button" id="cerrarModalAlta" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
@@ -270,7 +280,85 @@ echo $proyecto;
 </div>
 <!-- Modal con alta actividad -->
 
+<!-- Modal con modificar actividad -->
+<div class="modal fade" data-bs-backdrop="static" id="modalModificarActividad" tabindex="-1" aria-labelledby="modalModificarActividadLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalModificarActividadLabel">Modificar actividad</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <form id="formularioAlta">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="inputNombreActiivdadActualizar" class="form-label">Nombre:</label>
+                        <input  type="text" class="form-control" id="inputNombreActiivdadActualizar">
+                    </div>
+                </div>
 
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="inputHorasActividadActualizar" class="form-label">Horas:</label>
+                        <input  type="text" class="form-control" id="inputHorasActividadActualizar">
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label for="inputFechaInicioActividadActualizar" class="form-label">Fecha inicio:</label>
+                        <input  type="text" class="form-control" id="inputFechaInicioActividadActualizar"style="background-color:white;">
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label for="inputFechaFinActividadActualizar" class="form-label">Fecha fin:</label>
+                        <input  type="text" class="form-control" id="inputFechaFinActividadActualizar" style="background-color:white;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label for="inputDescripcionActividadActualizar" class="form-label">Descripción:</label>
+                        <textarea  class="form-control" id="inputDescripcionActividadActualizar" cols="50" maxlength="400" style="height: 135px;"></textarea>
+                    </div>
+                </div>
+            </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="modificarActividad" class="btn btn-success" data-bs-dismiss="modal">Modificar</button>
+        <button type="button" id="cerrarModalActualizacion" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <input type="hidden" id = "idModificarActividad">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal con modificar actividad -->
+
+<!-- Modal eliminar -->
+<div class="modal fade" data-bs-backdrop="static" id="modalEliminarActividad" tabindex="-1" aria-labelledby="modalEliminarActividadLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="background-color: #ff7f7f;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEliminarActividadLabel">Eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <h5><strong>Eliminada la actividad de forma correcta.</strong></h5>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="botonModalCerrar" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal eliminar -->
 
 
 
@@ -295,11 +383,11 @@ echo $proyecto;
         var modalError = new bootstrap.Modal(document.getElementById('modalError'));
         var modalActualizacion = new bootstrap.Modal(document.getElementById('modalActualizacion'));
         var modalAltaActividad = new bootstrap.Modal(document.getElementById('modalAltaActividad'));
-
+        var modalModificarActividad = new bootstrap.Modal(document.getElementById('modalModificarActividad'));
+        var modalEliminarActividad = new bootstrap.Modal(document.getElementById('modalEliminarActividad'));
     </script>
 
     <script type="text/javascript">
-
             flatpickr('#inputFechaInicio', {
                 minDate: "today",
                 weekNumbers: true,
@@ -368,6 +456,45 @@ echo $proyecto;
                 }
             });
 
+
+            flatpickr('#inputFechaInicioActividadActualizar', {
+                minDate: "today",
+                weekNumbers: true,
+                dateFormat: "d/m/Y",
+                locale: {
+                    firstDayOfWeek: 1,
+                    weekdays: {
+                    shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                    longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],         
+                    }, 
+                    months: {
+                    shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
+                    longhand: ['Enero', 'Febreo', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    },
+                }
+            });
+            flatpickr('#inputFechaFinActividadActualizar', {
+                "minDate": new Date().fp_incr(1),
+                weekNumbers: true,
+                dateFormat: "d/m/Y",
+                locale: {
+                    firstDayOfWeek: 1,
+                    weekdays: {
+                    shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                    longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],         
+                    }, 
+                    months: {
+                    shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
+                    longhand: ['Enero', 'Febreo', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    },
+                }
+            });
+
+
+
+
+
+
     </script>
 
 <script type="text/javascript">
@@ -376,7 +503,6 @@ echo $proyecto;
 
         function crearDatatable(){
             $('#tablaActividades').DataTable( {
-            order: [[5, 'asc']],
             dom: 'Bfrtip',
             buttons: [
                 {
@@ -433,10 +559,6 @@ echo $proyecto;
 });
     
 </script>
-
-
-
-
 
 </body>
 </html>
