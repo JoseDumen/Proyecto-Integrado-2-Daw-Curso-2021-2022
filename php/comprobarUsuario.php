@@ -5,7 +5,7 @@
 
     $datos = json_decode(file_get_contents('php://input'));
 
-    $sql = "SELECT * FROM empleados WHERE correo like '$datos->correo' AND contraseña like '$datos->password'";
+    $sql = "SELECT * FROM empleados WHERE correo like '$datos->correo' AND contraseña like '$datos->password' AND estado like '1'";
     //$sql = "SELECT * FROM empleados WHERE correo like 'dani@gmail.com' AND contraseña like 'dani1234'";
 
     

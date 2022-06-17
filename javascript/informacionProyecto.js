@@ -10,6 +10,8 @@ document.querySelector("#altaActividad").addEventListener("click", altaActividad
 document.querySelector("#cerrarModalAlta").addEventListener("click", vaciarModalActividad);
 document.querySelector("#modificarActividad").addEventListener("click", actualizarActividad);
 document.querySelector("#cerrarModalActualizacion").addEventListener("click", cerrarModalActualizacion);
+document.querySelector("#inputTareasActividadParte").addEventListener("change", mostrarTarea);
+document.querySelector("#botonAñadirParte").addEventListener("click",crearParteTrabajo);
 
 function editar() {
     document.querySelector("#inputNombre").disabled = false;
@@ -507,4 +509,113 @@ function eliminar(id) {
             modalEliminarActividad.toggle();
             traerActividades();
         });
+}
+
+function añadirTarea(id, evento) {
+    let oE = evento || window.event;
+    modalParteTrabajo.toggle();
+    let nombreActiivdad = oE.target.parentElement.parentElement.children[0].innerHTML
+    
+    document.querySelector("#idActividadParte").value=id;
+    document.querySelector("#inputNombreActividadParte").value=nombreActiivdad;
+    
+    document.querySelector("#inputTareasActividadParte").selectedIndex = 0;
+    document.querySelector("#inputNombreTareaActividad").value = "";
+    document.querySelector("#inputDescripcionTareaParte").value ="";
+    document.querySelector("#inputDescripcionTareaParte").innerHTML ="";
+
+
+
+    document.querySelector("#inputHorasActividadParte").classList.remove("is-invalid");
+    document.querySelector("#inputHorasActividadParte").classList.remove("is-valid");
+    document.querySelector("#inputTareasActividadParte").classList.remove("is-invalid");
+    document.querySelector("#inputTareasActividadParte").classList.remove("is-valid");
+    
+}
+
+ponerFechaInicio();
+
+function ponerFechaInicio(){
+    let fecha = new Date();
+let dia = fecha.getDate();
+let mes = fecha.getMonth() + 1;
+let anno = fecha.getFullYear();
+
+document.querySelector("#inputFechaActividadParte").value = dia+"/"+mes+"/"+anno;
+
+}
+
+function mostrarTarea(evento) {
+    let oE = evento || window.event;
+    let codigoTraer = oE.target.value;
+
+    let options = {
+        method: "POST",
+        body: JSON.stringify({ codigo: codigoTraer }),
+        headers: {
+            'Content-Type': 'application/json'// AQUI indicamos el formato
+        }
+    };
+
+    fetch("../php/traerNombreDescripcionTarea.php", options)
+        .then(respuesta => respuesta.text())
+        .then(texto => {
+            let valores = texto.split(",");
+            document.querySelector("#inputNombreTareaActividad").value = valores[0];
+            document.querySelector("#inputDescripcionTareaParte").value = valores[1];
+            document.querySelector("#inputDescripcionTareaParte").innerHTML = valores[1];
+            
+        });
+    
+}
+
+function crearParteTrabajo() {
+    let idActividad = document.querySelector("#idActividadParte").value.trim();
+    let idCodigoTarea = document.querySelector("#inputTareasActividadParte").value.trim();
+    let fechaParte = document.querySelector("#inputFechaActividadParte").value.trim();
+    let horasParte = parseInt(document.querySelector("#inputHorasActividadParte").value.trim());
+
+    let correcto = true;
+
+    if (!isNaN(horasParte)) {
+        document.querySelector("#inputHorasActividadParte").classList.remove("is-invalid");
+        document.querySelector("#inputHorasActividadParte").classList.add("is-valid");
+
+
+    } else {
+        document.querySelector("#inputHorasActividadParte").classList.remove("is-valid");
+        document.querySelector("#inputHorasActividadParte").classList.add("is-invalid");
+
+        correcto = false;
+    }
+
+    if (idCodigoTarea != "no") {
+        document.querySelector("#inputTareasActividadParte").classList.remove("is-invalid");
+        document.querySelector("#inputTareasActividadParte").classList.add("is-valid");
+
+
+    } else {
+        document.querySelector("#inputTareasActividadParte").classList.remove("is-valid");
+        document.querySelector("#inputTareasActividadParte").classList.add("is-invalid");
+
+        correcto = false;
+    }
+
+    if(correcto){
+
+        let options = {
+            method: "POST",
+            body: JSON.stringify({id:idActividad, codigo:idCodigoTarea, fecha:fechaParte, horas:horasParte }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        fetch("../php/crearParteTrabajo.php", options)
+            .then(respuesta => respuesta.text())
+            .then(texto => {
+                traerActividades();
+            });
+    }
+    
 }

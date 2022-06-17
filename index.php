@@ -33,7 +33,7 @@
                         Fallo en el inicio de sesión
                     </div>
                     <form action="" method="POST">
-                    <h1><ins>Control de Proyectos</ins></h1>
+                    <h1><ins>Gestión de Proyectos</ins></h1>
                         <label for="correo" class="form-label">Correo</label>
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" id="correo" name="correo" aria-describedby="basic-addon3">

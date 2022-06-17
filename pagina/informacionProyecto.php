@@ -139,7 +139,7 @@ $proyecto .= <<<EOT
                 <th>Horas</th>
                 <th>Fecha inicio</th>
                 <th>Fecha fin</th>
-                <th>Añadir tarea</th>
+                <th>Añadir parte de trabajo</th>
                 <th>Modificar</th>
                 <th>Eliminar</th>
             </tr>
@@ -272,7 +272,7 @@ echo $proyecto;
           </form>
       </div>
       <div class="modal-footer">
-        <button type="button" id="altaActividad" class="btn btn-success"data-bs-dismiss="modal">Alta</button>
+        <button type="button" id="altaActividad" class="btn btn-success">Alta</button>
         <button type="button" id="cerrarModalAlta" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
@@ -331,7 +331,7 @@ echo $proyecto;
           </form>
       </div>
       <div class="modal-footer">
-        <button type="button" id="modificarActividad" class="btn btn-success" data-bs-dismiss="modal">Modificar</button>
+        <button type="button" id="modificarActividad" class="btn btn-success">Modificar</button>
         <button type="button" id="cerrarModalActualizacion" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
         <input type="hidden" id = "idModificarActividad">
       </div>
@@ -360,9 +360,86 @@ echo $proyecto;
 </div>
 <!-- Modal eliminar -->
 
+<!-- Modal con parte de trabajo -->
+<div class="modal fade" data-bs-backdrop="static" id="modalParteTrabajo" tabindex="-1" aria-labelledby="modalParteTrabajoLabel" aria-hidden="true">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalParteTrabajoLabel">Crear parte de trabajo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <form>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="inputNombreActividadParte" class="form-label">Nombre actividad:</label>
+                        <input disabled type="text" class="form-control" id="inputNombreActividadParte">
+                        <input type="hidden" id="idActividadParte">
+                    </div>
+                </div>
 
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="inputFechaActividadParte" class="form-label">Fecha creación:</label>
+                        <input disabled type="text" class="form-control" id="inputFechaActividadParte">
+                    </div>
+                </div>
 
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="inputHorasActividadParte" class="form-label">Horas:</label>
+                        <input  type="text" class="form-control" id="inputHorasActividadParte">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="inputTareasActividadParte" class="form-label">Tareas:</label>
+                        <select class="form-select" id="inputTareasActividadParte" aria-label="Default select example">
+                            <?php
+                            include "../conexion/conexion.php";
 
+                            $sql = "SELECT tarcod FROM tarea";
+                            echo "<option value = 'no'>Seleccione una tarea</option>";
+                            $resultado = mysqli_query($conexion, $sql);
+                            while($registro = mysqli_fetch_assoc($resultado)){
+                                $codigo = $registro["tarcod"];
+                                echo "<option value=$codigo>$codigo</option>";
+                            }
+
+                            ?>
+
+                         </select>
+                        </div>
+                    </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="inputNombreTareaActividad" class="form-label">Nombre tarea:</label>
+                        <input disabled type="text" class="form-control" id="inputNombreTareaActividad">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label for="inputDescripcionTareaParte" class="form-label">Descripción:</label>
+                        <textarea disabled class="form-control" id="inputDescripcionTareaParte" cols="50" maxlength="400" style="height: 135px;"></textarea>
+                    </div>
+                </div>
+            </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="botonAñadirParte" class="btn btn-success">Crear parte</button>
+        <button type="button" id="botonCerrarParte" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <input type="hidden" id = "idModificarActividad">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal con parte de trabajo -->
 
         <?php
             include "componentes/footer.php";
@@ -385,6 +462,7 @@ echo $proyecto;
         var modalAltaActividad = new bootstrap.Modal(document.getElementById('modalAltaActividad'));
         var modalModificarActividad = new bootstrap.Modal(document.getElementById('modalModificarActividad'));
         var modalEliminarActividad = new bootstrap.Modal(document.getElementById('modalEliminarActividad'));
+        var modalParteTrabajo = new bootstrap.Modal(document.getElementById('modalParteTrabajo'));
     </script>
 
     <script type="text/javascript">

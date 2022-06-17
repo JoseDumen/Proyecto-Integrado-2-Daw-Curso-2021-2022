@@ -1,6 +1,7 @@
 "use strict";
 
 document.querySelector("#botonCrearTarea").addEventListener("click", crearTarea);
+document.querySelector("#botonActualizarTarea").addEventListener("click", actualizar);
 
 traerTareas();
 
@@ -129,4 +130,93 @@ function eliminar(evento) {
             modalEliminar.toggle();
             traerTareas();
         });
+}
+
+function modificar(evento) {
+    let oE = evento || window.event;
+
+    let codigo = oE.target.parentElement.parentElement.children[0].innerHTML;
+    let nombre = oE.target.parentElement.parentElement.children[1].innerHTML;
+    let descripcion = oE.target.parentElement.parentElement.children[2].innerHTML;
+
+    document.querySelector("#inputCodigoActualizar").classList.remove("is-invalid");
+    document.querySelector("#inputCodigoActualizar").classList.remove("is-valid");
+    document.querySelector("#inputNombreActualizar").classList.remove("is-invalid");
+    document.querySelector("#inputNombreActualizar").classList.remove("is-valid");
+    document.querySelector("#inputDescripcionActualizar").classList.remove("is-invalid");
+    document.querySelector("#inputDescripcionActualizar").classList.remove("is-valid");
+
+    modalModificar.toggle();
+
+    document.querySelector("#inputCodigoActualizar").value = codigo;
+    document.querySelector("#inputNombreActualizar").value = nombre;
+    document.querySelector("#inputDescripcionActualizar").value = descripcion;
+    document.querySelector("#inputDescripcionActualizar").innerHTML = descripcion;
+
+    
+}
+
+function actualizar() {
+
+    let codigoTarea = document.querySelector("#inputCodigoActualizar").value.trim();
+    let nombreTarea = document.querySelector("#inputNombreActualizar").value.trim();
+    let descripcionTarea = document.querySelector("#inputDescripcionActualizar").value.trim();
+
+    let correcto = true;
+
+    if (codigoTarea != "") {
+        document.querySelector("#inputCodigoActualizar").classList.remove("is-invalid");
+        document.querySelector("#inputCodigoActualizar").classList.add("is-valid");
+
+
+    } else {
+        document.querySelector("#inputCodigoActualizar").classList.remove("is-valid");
+        document.querySelector("#inputCodigoActualizar").classList.add("is-invalid");
+
+
+        correcto = false;
+    }
+
+    if (nombreTarea != "") {
+        document.querySelector("#inputNombreActualizar").classList.remove("is-invalid");
+        document.querySelector("#inputNombreActualizar").classList.add("is-valid");
+
+
+    } else {
+        document.querySelector("#inputNombreActualizar").classList.remove("is-valid");
+        document.querySelector("#inputNombreActualizar").classList.add("is-invalid");
+
+        correcto = false;
+    }
+
+    if (descripcionTarea != "") {
+        document.querySelector("#inputDescripcionActualizar").classList.remove("is-invalid");
+        document.querySelector("#inputDescripcionActualizar").classList.add("is-valid");
+
+
+    } else {
+        document.querySelector("#inputDescripcionActualizar").classList.remove("is-valid");
+        document.querySelector("#inputDescripcionActualizar").classList.add("is-invalid");
+
+        correcto = false;
+    }
+
+    if(correcto){
+        let options = {
+            method: "POST",
+            body: JSON.stringify({ codigo: codigoTarea, nombre: nombreTarea, descripcion: descripcionTarea }),
+            headers: {
+                'Content-Type': 'application/json'// AQUI indicamos el formato
+            }
+        };
+
+        fetch("../php/actualizarTarea.php", options)
+            .then(respuesta => respuesta.text())
+            .then(texto => {
+                traerTareas();
+            });
+        
+    }
+    
+    
 }

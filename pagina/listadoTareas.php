@@ -32,7 +32,7 @@ if(isset($_SESSION["logeado"]) && $_SESSION["logeado"] == true){
 
     </style>
     </head>
-    <body style="overflow-x:hidden">
+    <body style="overflow-x:hidden" id="cuerpo">
         <?php
             include "componentes/navbar.php";
         ?>
@@ -213,6 +213,57 @@ if(isset($_SESSION["logeado"]) && $_SESSION["logeado"] == true){
 </div>
 <!-- Modal eliminar -->
 
+<!-- Modal modificar -->
+<div class="modal fade" data-bs-backdrop="static" id="modalModificar" tabindex="-1" aria-labelledby="modalModificarLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalModificarLabel">Eliminación de tarea</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <form>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label for="inputCodigoActualizar" class="form-label">Código:</label>
+                <input  type="text" class="form-control" id="inputCodigoActualizar" value="">
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label for="inputNombreActualizar" class="form-label">Nombre tarea:</label>
+                <input  type="text" class="form-control" id="inputNombreActualizar" value="">
+
+            </div>
+        </div>
+
+        <div class="col-md-3 mx-auto">
+            <button type="button" id="botonActualizarTarea" class="btn btn-outline-success" style="margin-top: 20%;">Actualizar</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label for="inputDescripcionActualizar" class="form-label">Descripción:</label>
+                <textarea  class="form-control" id="inputDescripcionActualizar" cols="50" maxlength="400" style="height: 64px;"></textarea>
+            </div>
+        </div>
+    </div>
+</form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="botonModalCerrar" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal modificar -->
+
+
+
         <?php
             include "componentes/footer.php";
         ?>
@@ -232,6 +283,7 @@ if(isset($_SESSION["logeado"]) && $_SESSION["logeado"] == true){
         var modalActualizacion = new bootstrap.Modal(document.getElementById('modalActualizacion'));
         var modalAlta = new bootstrap.Modal(document.getElementById('modalAlta'));
         var modalEliminar = new bootstrap.Modal(document.getElementById('modalEliminar'));
+        var modalModificar = new bootstrap.Modal(document.getElementById('modalModificar'));
     </script>
 
 

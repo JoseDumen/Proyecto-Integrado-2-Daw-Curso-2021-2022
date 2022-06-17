@@ -73,7 +73,7 @@ while($registro = mysqli_fetch_assoc($resultado)){
     $descripcion = $registro["descripcion"];
     $datosCliente = $registro["datosCliente"];
     $importe = str_replace(".",",",$registro["importe"]);
-    
+
     $fechaInicio = $registro["fechaInicio"];
     $fechaInicioPartida = explode("-",$fechaInicio);
     $fechaInicioFormateada = $fechaInicioPartida[2]."/".$fechaInicioPartida[1]."/".$fechaInicioPartida[0];
@@ -104,19 +104,19 @@ $proyecto .= <<<EOT
                         </div>
                     </div>
                         <div class="row">
-    
+
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label for="inputImporte" class="form-label">Importe:</label>
                                     <input disabled type="text" class="form-control" id="inputImporte" value="$importe">
                                 </div>
                             </div>
-    
+
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label for="inputFechaInicio" class="form-label">Fecha inicio:</label>
                                     <input disabled type="text" class="form-control" id="inputFechaInicio" name="inputFechaInicio" value="$fechaInicioFormateada">
-    
+
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -128,15 +128,13 @@ $proyecto .= <<<EOT
                             <div class="col-md-3 mx-auto">
                                 <button type="button" id="botonVerProyecto" onclick="verProyecto($id)" name="botonVerProyecto" class="btn btn-outline-success" style="margin-top: 11%;">Ver proyecto</button>
                             </div>
-    
+
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        
 EOT;
-
 
 }
 $proyecto .= <<<EOT
@@ -147,20 +145,10 @@ $proyecto .= <<<EOT
 </div>
 EOT;
 echo $proyecto;
-
-
-
         }
-
-
-
-
     ?>
 
 </div>
-
-
-
 
         <?php
             include "componentes/footer.php";

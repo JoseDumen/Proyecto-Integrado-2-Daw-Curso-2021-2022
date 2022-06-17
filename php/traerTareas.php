@@ -19,7 +19,7 @@
         <td>$codigo</td>
         <td>$nombre</td>
         <td>$descripcion</td>
-        <td><input type='button' onclick='modificar($codigo)' class='btn btn-outline-secondary' value='Modificar' </td>
+        <td><input type='button' onclick='modificar()' class='btn btn-outline-secondary' value='Modificar' </td>
         <td><input type='button' onclick='eliminar()' class='btn btn-outline-danger' value='Eliminar' </td>
         </tr>";
             
